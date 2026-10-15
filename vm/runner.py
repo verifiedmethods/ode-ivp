@@ -163,8 +163,9 @@ def main(argv=None) -> int:
                 any_failed = True
                 print(f"      {g.id} FAILED ({g.title}): {g.hint or g.measured}")
     print(f"Report: {html_path}")
-    if not meta["student"].get("name"):
-        print("Remember to fill in student/student_info.txt.")
+    unfilled = [k for k in ("name", "matric_number", "institution", "supervisor", "ai_use") if not meta["student"].get(k)]
+    if unfilled:
+        print(f"Remember to fill in student/student_info.txt (still empty: {', '.join(unfilled)}).")
 
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if ci and summary:

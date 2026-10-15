@@ -328,7 +328,7 @@ def build_html(results, meta) -> str:
             f"src='data:image/png;base64,{cost}'>"
             "<figcaption>R3. For a target error (a horizontal line), the method furthest left is the cheapest.</figcaption></figure>"
         )
-    missing = [k for k in ("name", "matric_number", "institution", "supervisor") if not info.get(k)]
+    missing = [k for k in ("name", "matric_number", "institution", "supervisor", "ai_use") if not info.get(k)]
     warn = ""
     if missing:
         warn = ("<p class='hint'>Fill in student/student_info.txt (missing: "
