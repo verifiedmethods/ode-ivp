@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
 import datetime as _dt
+import io
 import importlib.util
 import os
 import platform
@@ -103,7 +105,15 @@ def main(argv=None) -> int:
         print("Fix this first, then run python verify.py again.")
         return 2
 
-    results = run_all(module, str(steps_path), load_expected())
+    print("Running the checks (a few seconds; the first run can take longer)...")
+    captured = io.StringIO()
+    with contextlib.redirect_stdout(captured):  # keep the student's own print() output from flooding the summary
+        results = run_all(module, str(steps_path), load_expected())
+    printed = captured.getvalue().splitlines()
+    if printed:
+        print(f"Your code printed {len(printed)} line(s) during the checks; the first few:")
+        for line in printed[:5]:
+            print("    " + line[:200])
 
     ci = args.ci or os.environ.get("GITHUB_ACTIONS") == "true"
     meta = {
@@ -140,9 +150,13 @@ def main(argv=None) -> int:
         g4 = next((g for g in r.gates if g.id == "G4"), None)
         order = f"   observed order {g4.value:.3f}" if g4 is not None and g4.value is not None else ""
         print(f"{label} {r.n_passed}/{len(r.gates)} gates passed{order}")
-        for g in r.gates:
-            if not g.passed:
-                any_failed = True
+        failed = [g for g in r.gates if not g.passed]
+        any_failed = any_failed or bool(failed)
+        messages = {g.hint or g.measured for g in failed}
+        if len(failed) > 1 and len(messages) == 1:  # the same error stopped every gate: say it once
+            print(f"      {', '.join(g.id for g in failed)} FAILED: {messages.pop()}")
+        else:
+            for g in failed:
                 print(f"      {g.id} FAILED ({g.title}): {g.hint or g.measured}")
     print(f"Report: {html_path}")
     unfilled = [k for k in ("name", "matric_number", "institution", "supervisor", "ai_use") if not meta["student"].get(k)]

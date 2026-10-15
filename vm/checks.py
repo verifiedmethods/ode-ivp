@@ -97,6 +97,10 @@ class MethodResult:
         }
 
 
+def _times(n: int) -> str:
+    return {0: "0 times", 1: "once", 2: "twice"}.get(n, f"{n} times")
+
+
 def load_expected(path: Path = EXPECTED_PATH) -> dict:
     with open(path, encoding="utf-8") as fh:
         return json.load(fh)
@@ -133,11 +137,14 @@ def gate_one_step(step, spec: MethodSpec, expected: dict) -> GateResult:
     passed = worst <= ONE_STEP_RTOL
     hint = ""
     if not passed:
-        hint = (
-            f"Largest difference in the {worst_case} case. Compare your formula with tutorial section "
-            f"{spec.tutorial_section}: check the time at which each stage is evaluated (t, t + h/2, t + h), "
-            "the multiples of h inside each stage, and the final weights."
-        )
+        if spec.key == "euler":
+            what = ("Euler's method is y + h f(t, y): check the factor h, and that you return the new value "
+                    "y_{n+1}, not just the increment h f(t, y).")
+        else:
+            what = ("check the time at which each stage is evaluated (t, t + h/2, t + h), "
+                    "the multiples of h inside each stage, and the final weights.")
+        hint = (f"Largest difference in the {worst_case} case. Compare your formula with tutorial section "
+                f"{spec.tutorial_section}: {what}")
     return GateResult(
         "G1", "One step matches the method",
         passed, f"largest relative difference {worst:.1e}",
@@ -155,14 +162,16 @@ def gate_cost(step, spec: MethodSpec) -> GateResult:
     passed = f.calls == spec.evals
     hint = ""
     if not passed:
-        hint = f"{spec.name} evaluates f exactly {spec.evals} time(s) per step."
-        if f.calls > 2 * spec.evals:
+        hint = f"{spec.name} evaluates f exactly {_times(spec.evals)} per step; your step called it {_times(f.calls)}."
+        if f.calls == 0:
+            hint += " Use f(t, y) to compute the slope; without it the step cannot follow the equation."
+        elif f.calls > 2 * spec.evals:
             hint += " Many more calls than that usually means a library solver is being called inside the step."
         elif f.calls > spec.evals:
             hint += " Store each stage value (k1, k2, ...) in a variable instead of calling f again."
     return GateResult(
         "G2", "Cost per step",
-        passed, f"{f.calls} call(s) to f",
+        passed, f"f called {_times(f.calls)}",
         f"exactly {spec.evals}",
         "The number of f-evaluations defines the method's cost; extra calls also reveal library solvers.",
         hint, float(f.calls),
@@ -186,12 +195,15 @@ def gate_systems(step, spec: MethodSpec) -> GateResult:
     if not np.array_equal(y, before):
         problems.append("changed the input y in place")
     passed = not problems
-    hint = ""
-    if not passed:
-        hint = (
-            "Work with whole NumPy arrays (no float(y) or y[0]), and build a new array for the result: "
-            "write y_new = y + ..., not y += ... (which changes the caller's array)."
-        )
+    hints = []
+    if result is None:
+        hints.append("Your step returned None: did you forget the 'return' statement?")
+    elif shape != (2,):
+        hints.append("Work with whole NumPy arrays (no float(y) or y[0]) so that the step works for systems.")
+    if not np.array_equal(y, before):
+        hints.append("Build a new array for the result: write y_new = y + ..., not y += ... "
+                     "(which changes the caller's array).")
+    hint = " ".join(hints)
     return GateResult(
         "G3", "Works on systems, without side effects",
         passed, "correct" if passed else "; ".join(problems),

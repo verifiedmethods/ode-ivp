@@ -58,3 +58,15 @@ def test_syntax_error_gives_exit_code_2(tmp_path, capsys):
     bad.write_text("def euler_step(f, t, y, h)\n    return y\n", encoding="utf-8")
     assert main(["--steps", str(bad), "--out", str(tmp_path / "r")]) == 2
     assert "line 1" in capsys.readouterr().out
+
+
+def test_student_prints_are_captured_and_repeated_errors_said_once(tmp_path, capsys):
+    student = tmp_path / "student"
+    student.mkdir()
+    (student / "steps.py").write_text(
+        "def euler_step(f, t, y, h):\n    print('debug', t)\n    return y + h * undefined_name\n", encoding="utf-8"
+    )
+    main(["--steps", str(student / "steps.py"), "--out", str(tmp_path / "r")])
+    out = capsys.readouterr().out
+    assert "Your code printed" in out and out.count("debug") <= 5
+    assert "G1, G2, G3, G4 FAILED: Your code raised NameError" in out

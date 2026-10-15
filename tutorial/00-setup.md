@@ -68,6 +68,7 @@ It should print `ready`.
 | `error: externally-managed-environment` | Your system's Python does not allow installing packages directly | Use the virtual environment in step 2 |
 | `No module named 'numpy'` | The packages are not installed in the Python you are using | Activate the environment, then run the `pip install` line again |
 | `'python' is not recognized` (Windows) | Python is not on your PATH | Use `py` instead, or reinstall Python and tick "Add python.exe to PATH" |
+| `'py' is not recognized` (Windows) | Python came from the Microsoft Store, which has no `py` command | Use `python -m venv .venv` in step 2 instead of `py -m venv .venv` |
 | `running scripts is disabled on this system` (Windows PowerShell) | PowerShell blocks the activation script | Use Command Prompt instead of PowerShell |
 
 ## Run the checks for the first time

@@ -70,3 +70,25 @@ def test_errors_in_student_code_are_explained(tmp_path):
     assert r.status == "checked" and not r.all_passed
     g1 = r.gates[0]
     assert "NameError" in g1.hint and "line 2" in g1.hint
+
+
+def test_cost_gate_explains_a_step_that_never_calls_f():
+    g = gate_cost(lambda f, t, y, h: y.copy(), SPEC["euler"])
+    assert not g.passed and "0 times" in g.hint and "f(t, y)" in g.hint
+
+
+def test_systems_gate_hint_matches_the_problem():
+    g_none = gate_systems(lambda f, t, y, h: None, SPEC["euler"])
+    assert "return" in g_none.hint and "y +=" not in g_none.hint
+
+    def in_place(f, t, y, h):
+        y += h * np.asarray(f(t, y))
+        return y
+
+    g_inplace = gate_systems(in_place, SPEC["euler"])
+    assert "y +=" in g_inplace.hint and "float(y)" not in g_inplace.hint
+
+
+def test_one_step_hint_for_euler_does_not_mention_stages():
+    g = gate_one_step(lambda f, t, y, h: y + 2 * h * np.asarray(f(t, y)), SPEC["euler"], load_expected())
+    assert not g.passed and "t + h/2" not in g.hint and "increment" in g.hint
