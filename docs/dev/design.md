@@ -1,6 +1,6 @@
 # Unit A1 design: ODE initial value problems
 
-Status: approved 15 October 2026; prototype v0.1.0.dev0 implemented (local, unpublished). The numbers in Section 4 come from a reference run on 15 October 2026 (NumPy 2, SciPy, classical formulas); the script is kept in the private `solutions` repository.
+Status: approved 15 October 2026; prototype v0.1.0.dev0 published for trial on 16 October 2026. The numbers in Section 4 come from a reference run on 15 October 2026 (NumPy 2, SciPy, classical formulas); the script is kept in the private `solutions` repository.
 
 ## 1. Purpose
 
