@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from vm import __version__  # noqa: E402
-from vm.runner import suite_fingerprint  # noqa: E402
+from vm.fingerprint import suite_fingerprint  # noqa: E402
 
 DATE = (2026, 1, 1, 0, 0, 0)  # fixed timestamps, so rebuilding gives identical zips
 

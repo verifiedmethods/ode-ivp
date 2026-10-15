@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import argparse
 import datetime as _dt
-import hashlib
 import importlib.util
 import os
 import platform
@@ -14,29 +13,12 @@ from pathlib import Path
 
 from . import UNIT_ID, UNIT_TITLE, __version__
 from .checks import load_expected, run_all
+from .fingerprint import file_sha256, suite_fingerprint
 from .report import build_html, build_json
 
-VM_DIR = Path(__file__).resolve().parent
-ROOT = VM_DIR.parent
+ROOT = Path(__file__).resolve().parent.parent
 
 INFO_FIELDS = ("name", "matric_number", "department", "institution", "supervisor", "ai_use")
-
-
-def file_sha256(path: Path) -> str:
-    """SHA-256 of a text file with line endings normalised, so Windows and Linux copies agree."""
-    data = Path(path).read_bytes().replace(b"\r\n", b"\n")
-    return hashlib.sha256(data).hexdigest()
-
-
-def suite_fingerprint(vm_dir: Path = VM_DIR, verify_script: Path = ROOT / "verify.py") -> str:
-    """One hash over every file of the check suite (vm/*.py, vm/expected.json, verify.py)."""
-    files = sorted(vm_dir.glob("*.py")) + [vm_dir / "expected.json"]
-    if verify_script.exists():
-        files.append(verify_script)
-    h = hashlib.sha256()
-    for p in files:
-        h.update(p.name.encode("utf-8") + b"\0" + file_sha256(p).encode("ascii") + b"\n")
-    return h.hexdigest()
 
 
 def read_info(path: Path) -> dict:

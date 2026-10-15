@@ -1,6 +1,7 @@
 import json
 
-from vm.runner import file_sha256, main, read_info
+from vm.fingerprint import file_sha256
+from vm.runner import main, read_info
 
 
 def test_read_info(tmp_path):
