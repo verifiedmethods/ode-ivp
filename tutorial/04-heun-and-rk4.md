@@ -19,6 +19,11 @@ $$
 
 Two evaluations of $f$ per step; global error $O(h^2)$.
 
+> **Names differ between textbooks.** Some books, including Burden and Faires'
+> *Numerical Analysis*, call this formula the **modified Euler method** and use
+> the name "Heun's method" for a different, third-order formula. In this unit,
+> "Heun's method" always means the formula above.
+
 ## Classical fourth-order Runge–Kutta (RK4), order 4
 
 $$

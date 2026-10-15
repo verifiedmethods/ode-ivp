@@ -20,9 +20,9 @@ For real negative $z$ this gives a **step-size limit**:
 
 | Method | Stable for |
 |---|---|
-| Euler | $h\,|\lambda| < 2$ |
-| Heun | $h\,|\lambda| < 2$ |
-| RK4 | $h\,|\lambda| < 2.785$ |
+| Euler | $h\,\lvert\lambda\rvert < 2$ |
+| Heun | $h\,\lvert\lambda\rvert < 2$ |
+| RK4 | $h\,\lvert\lambda\rvert < 2.785$ |
 
 ## Stiffness
 

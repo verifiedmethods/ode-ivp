@@ -9,7 +9,7 @@ $$
 The function $f$ gives the rate of change; the initial value $y_0$ fixes which
 solution we want. Examples you may know:
 
-- growth: $y' = ry$, solution $y = y_0 e^{rt}$;
+- growth: $y' = ry$, solution $y = y_0 e^{r(t - t_0)}$;
 - logistic population growth: $y' = ry(1 - y/K)$;
 - a mass on a spring, written as a system of two first-order equations:
   $y_1' = y_2$, $y_2' = -y_1$.
@@ -35,7 +35,15 @@ with whole-array arithmetic (`y + h * k1`), and they will work for any length.
 
 ## The test problems
 
-The checks use six problems, P1 to P6, listed at the end of your report. Four of
-them have exact solutions, so we can measure the error exactly; P5 has no exact
-solution and is compared with a very accurate SciPy computation; P6 tests
-stability (section 6).
+The checks use six problems. Five have exact solutions, so the error can be
+measured exactly; P5 has none and is compared with a very accurate SciPy
+computation.
+
+| Problem | Equation | Interval | Exact solution | Used for |
+|---|---|---|---|---|
+| P1 | $y' = y$, $y(0) = 1$ | $[0, 1]$ | $e^t$ | error tables |
+| P2 | $y' = y - t^2 + 1$, $y(0) = 0.5$ | $[0, 2]$ | $(t+1)^2 - \tfrac12 e^t$ | error tables, gate G4 |
+| P3 | $y' = 0.8\,y\,(1 - y/10)$, $y(0) = 1$ | $[0, 5]$ | logistic curve | error tables |
+| P4 | $y_1' = y_2$, $y_2' = -y_1$, $y(0) = (1, 0)$ | $[0, 2\pi]$ | $(\cos t, -\sin t)$ | error tables, gate G3 |
+| P5 | $x' = x - 0.1xy$, $y' = -1.5y + 0.075xy$, $(x, y)(0) = (10, 5)$ | $[0, 15]$ | none | comparison with SciPy |
+| P6 | $y' = -50y$, $y(0) = 1$ | $[0, 4]$ | $e^{-50t}$ | stability (section 6) |

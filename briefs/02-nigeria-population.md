@@ -20,7 +20,7 @@ Two models, both starting from $P(1960) = 45.05$ million (time in years from
 | A | 0.0326 | 500 |
 | B | 0.0289 | 1000 |
 
-Both were chosen so that they follow the 1960 to 2025 data closely.
+Both stay within 10% of the data for every year from 1960 to 2025.
 
 ## Question
 
@@ -38,10 +38,10 @@ what does that say about what the data can determine?
 2. **Compare with the data**: plot both models and the data for 1960 to 2025;
    report the largest relative difference for each model.
 3. **Compare the projections** for 2050 and 2100. How far apart are they?
-4. **Discuss**: two models with very different $K$ fit 65 years of data about
-   equally well. Why? (Hint: compare $P$ with $K$ over the data period; what
-   does the logistic equation look like when $P \ll K$?) What would the data
-   need to show for $K$ to be determined?
+4. **Discuss**: two models with very different $K$ both stay close to 65 years
+   of data. Why? (Hint: compute each model's per-capita growth rate
+   $r(1 - P/K)$ in 1960 and in 2025, and compare both with the growth rate in
+   the data.) What would the data need to show for $K$ to be determined?
 5. **Verification report** with all gates passed, and your completed
    `CONTRIBUTION.md`.
 

@@ -18,8 +18,13 @@ order; each one ends with something to do.
 | [8](08-choosing-a-brief.md) | Choosing a project brief |
 
 **What you need:** a laptop (4 GB of memory is enough), Python 3.10 or later
-with NumPy, SciPy and Matplotlib, and about two to four hours for sections 0
-to 7. No internet connection is needed once Python is installed.
+with NumPy, SciPy and Matplotlib, and about four to six hours for sections 0
+to 7, best spread over several sittings. No internet connection is needed once
+Python and the packages are installed.
+
+**What you should know already:** calculus including Taylor series, a first
+course in ordinary differential equations, and basic Python (variables,
+functions, and arithmetic with NumPy arrays).
 
 **What you hand in:** your `student/steps.py`, your verification report, your
 completed `student/CONTRIBUTION.md`, and the write-up for your project brief.

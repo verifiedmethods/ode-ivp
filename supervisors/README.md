@@ -9,5 +9,6 @@ This folder is for supervisors and lecturers. Students may read it too.
 | [rubric.md](rubric.md) | A marking rubric for the computational chapter |
 | [ai-use.md](ai-use.md) | A statement on AI tools that you can adopt or adapt |
 
-Marking guides for the project briefs are available to supervisors on request
-through the verifiedmethods site.
+Marking guides for the project briefs are available to supervisors on request:
+email abdgafartunde@yahoo.com from your institutional address, saying which unit
+and course you supervise. Website: https://verifiedmethods.github.io

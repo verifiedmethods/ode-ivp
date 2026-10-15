@@ -12,5 +12,6 @@ Changing the parameters of a provided problem is not, on its own, a research
 contribution: your contribution is the study, the evidence and the
 interpretation.
 
-Include in your project appendix: your verification report, your completed
-`student/CONTRIBUTION.md`, and your `steps.py`.
+Include in your project appendix: your verification report (printed, or saved
+as PDF from your browser), your completed `student/CONTRIBUTION.md`, and your
+`steps.py`.

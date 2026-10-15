@@ -12,13 +12,14 @@ quickly; a student who copied it usually cannot.
    times? (Cost, and gate G2.)
 3. Why must the step return a new array instead of changing `y` in place? What
    goes wrong otherwise?
-4. Change one weight in your RK4 step (for example $2k_2 \to k_2$) and predict
-   what happens to the observed order. Then run `verify.py` and check.
+4. Change one weight in a copy of your RK4 step (for example $2k_2 \to k_2$)
+   and predict what happens to the observed order. Then run `verify.py` on the
+   copy and check, and undo the change afterwards.
 
 ## About the results
 
 5. Why does halving $h$ reduce the RK4 error by about 16? What did your table
-   show, and where did that stop being true?
+   show, and for which step sizes would you expect that to stop being true?
 6. Why is the observed order away from its theoretical value for the largest
    step sizes?
 7. Using your error–cost plot: which method would you use for an accuracy of

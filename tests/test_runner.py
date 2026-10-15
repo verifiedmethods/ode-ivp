@@ -70,3 +70,29 @@ def test_student_prints_are_captured_and_repeated_errors_said_once(tmp_path, cap
     out = capsys.readouterr().out
     assert "Your code printed" in out and out.count("debug") <= 5
     assert "G1, G2, G3, G4 FAILED: Your code raised NameError" in out
+
+
+def test_scan_imports_flags_unexpected_modules(tmp_path):
+    from vm.runner import scan_imports
+
+    ok = tmp_path / "ok.py"
+    ok.write_text("import numpy as np\nimport math\n", encoding="utf-8")
+    assert scan_imports(ok) == (["math", "numpy"], [])
+    bad = tmp_path / "bad.py"
+    bad.write_text("import numpy as np\nfrom vm import checks\nimport sys\nexec('x=1')\n", encoding="utf-8")
+    imports, unexpected = scan_imports(bad)
+    assert {"vm", "sys", "exec()"} <= set(unexpected) and "numpy" not in unexpected
+
+
+def test_report_warns_supervisor_about_unexpected_imports(tmp_path):
+    student = tmp_path / "student"
+    student.mkdir()
+    (student / "steps.py").write_text(
+        "import numpy as np\nimport vm.checks  # flagged; the test must not change the checks\n"
+        "def euler_step(f, t, y, h):\n    return y + h * np.asarray(f(t, y))\n",
+        encoding="utf-8",
+    )
+    out = tmp_path / "report"
+    main(["--steps", str(student / "steps.py"), "--out", str(out)])
+    html = (out / "verification-report.html").read_text(encoding="utf-8")
+    assert "For the supervisor:" in html and "vm" in html

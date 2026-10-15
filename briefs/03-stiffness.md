@@ -24,8 +24,8 @@ y(t) = e^{-t} \begin{pmatrix} 1 \\ 1 \end{pmatrix}
      + e^{-100t} \begin{pmatrix} 1 \\ -1 \end{pmatrix}.
 $$
 
-After $t \approx 0.05$ the fast part has died away and the solution changes
-slowly, yet the fast eigenvalue still controls stability.
+After $t \approx 0.1$ the fast part has died away (it is below $10^{-4}$) and the
+solution changes slowly, yet the fast eigenvalue still controls stability.
 
 ## Question
 
@@ -41,7 +41,8 @@ stability? How much work does stiffness cost?
    experiment (bisection on $h$ is a good approach), and compare with theory.
 3. **Experiment on the system:** find the limits again and compare with your
    theory. Plot a stable and an unstable solution for each method.
-4. **Cost of stiffness:** for a target error of $10^{-4}$ at $t = 5$, find the
+4. **Cost of stiffness:** for a target error of $10^{-4}$ at $t = 5$ (absolute
+   error in the max norm; the solution itself is only about $7 \times 10^{-3}$ there), find the
    largest $h$ that meets the target *and* is stable, for each method. Which
    condition, accuracy or stability, decides it? Compare the work with what the
    accuracy alone would need if the fast process were absent ($y' = -y$).

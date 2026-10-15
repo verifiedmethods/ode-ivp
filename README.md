@@ -9,7 +9,9 @@ work: observed convergence order, error against cost, and stability. A single
 command checks your code and writes a **verification report** that your
 supervisor can read in two minutes.
 
-> **Status:** prototype (version 0.1.0.dev0), not yet released.
+> **Status:** prototype for trial (version 0.1.0.dev0); not yet a formal release.
+>
+> Website: https://verifiedmethods.github.io · Contact: abdgafartunde@yahoo.com
 
 ## Quick start
 

@@ -305,7 +305,9 @@ def build_html(results, meta) -> str:
         rows.append(("Repository and commit", f"{ci.get('repository', '')} @ {ci.get('commit', '')}"))
         if ci.get("run_url"):
             rows.append(("CI run", ci["run_url"]))
+    code = meta.get("student_code", {"imports": [], "unexpected": []})
     rows += [
+        ("Imports in steps.py", ", ".join(code["imports"]) or "none"),
         ("Student-code fingerprint", f"SHA-256 {fp['student_code']}"),
         ("Check-suite fingerprint", f"SHA-256 {fp['check_suite']}"),
         ("Environment", f"Python {env['python']}, NumPy {env['numpy']}, SciPy {env['scipy']}, "
@@ -330,8 +332,13 @@ def build_html(results, meta) -> str:
         )
     missing = [k for k in ("name", "matric_number", "institution", "supervisor", "ai_use") if not info.get(k)]
     warn = ""
+    if code["unexpected"]:
+        warn += ("<p class='hint'><strong>For the supervisor:</strong> steps.py uses "
+                 + _e(", ".join(code["unexpected"]))
+                 + ". The methods need only NumPy. Look at the file before relying on this report: "
+                 "code in steps.py runs alongside the checks.</p>")
     if missing:
-        warn = ("<p class='hint'>Fill in student/student_info.txt (missing: "
+        warn += ("<p class='hint'>Fill in student/student_info.txt (missing: "
                 + _e(", ".join(missing)) + ") before you submit this report.</p>")
     ai = info.get("ai_use")
     title = f"Verification report: {info.get('name') or 'student'}, unit {UNIT_ID}"

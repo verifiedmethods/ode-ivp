@@ -40,6 +40,14 @@ can.
 ## Using AI tools
 
 You may use AI tools to understand the methods or to find a bug, if you say so
-in `student_info.txt`. Your analysis and write-up must be your own. If an AI
-tool writes your code for you, you will still need to explain every line of it
-in your viva.
+in `student_info.txt`. Write the three step functions yourself; if any part of
+your code came from an AI tool or another person, say so in your disclosure and
+in `CONTRIBUTION.md`. Your analysis and write-up must be your own, and you must
+be able to explain every line of your code in your viva.
+
+## Printing the report
+
+Projects are usually submitted as bound copies. Open the report in your browser
+and use **Print**: print it on paper, or choose **Save as PDF** to include it in
+your appendix. The first pages (details, summary, plots and statement) are the
+important ones.

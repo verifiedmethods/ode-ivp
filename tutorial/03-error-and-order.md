@@ -16,7 +16,7 @@ the largest error over the components of $y$ (the *max norm*).
 
 ## Order
 
-A method of order $p$ has, for small enough $h,$
+A method of order $p$ has, for small enough $h$,
 
 $$
 e(h) \approx C\,h^p .
@@ -42,9 +42,10 @@ squares, which is less sensitive to any single point.
   is small. For the first rows of a table the observed order can be well away
   from $p$. That is expected, and it is why G4 uses $n = 40$ to $320$ steps.
 - **Very small $h$ (rounding):** computers store about 16 significant digits.
-  Once the error reaches about $10^{-13}$, rounding errors stop it decreasing,
-  and the observed order drops. With RK4 this happens with surprisingly few
-  steps.
+  Once the error reaches about $10^{-14}$ to $10^{-15}$, rounding errors stop it
+  decreasing, and the observed order drops. For RK4 on P1 this happens after
+  about 2000 steps, beyond the tables in your report; brief 1 asks you to find
+  where.
 
 ## What to do
 

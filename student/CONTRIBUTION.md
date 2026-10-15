@@ -11,7 +11,8 @@ together with your verification report.
 
 ## What I did myself
 
-- [ ] I wrote `euler_step`, `heun_step` and `rk4_step` in `student/steps.py`.
+- [ ] I wrote `euler_step`, `heun_step` and `rk4_step` in `student/steps.py` myself
+      (any help, including from AI tools, is listed below).
 - [ ] I ran the convergence, cost and stability studies and produced the figures in my write-up.
 - [ ] I wrote the analysis and interpretation in my own words.
 - [ ] Anything else (describe): ______________________________________

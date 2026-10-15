@@ -1,8 +1,18 @@
 # 0. Setting up
 
-You do this once. It takes about ten minutes and needs internet access only
-for step 2. If you have no internet at home, do step 2 at a place that has it;
-afterwards everything runs offline.
+You do this once. It takes about ten minutes plus download time. Steps 1 and 2
+need internet access (Python itself is about 30 MB; Anaconda is about 1 GB);
+after that everything runs offline. If you have no internet at home, do steps 1
+and 2 at a place that has it.
+
+**On Windows, before you start:**
+
+- **Unzip the unit properly.** Right-click the downloaded zip file and choose
+  **Extract All**. Working inside the zip without extracting it does not work.
+- **Open Command Prompt in the unit's folder.** Open the extracted folder in File
+  Explorer, click the address bar at the top, type `cmd` and press Enter.
+  (On Windows 11, "Open in Terminal" opens PowerShell; see the table at the end
+  of this section if you use it.)
 
 ## Step 1. Python
 
@@ -67,9 +77,16 @@ It should print `ready`.
 | `zsh: command not found: python` (macOS, Linux) | Outside a virtual environment the command is `python3` | Activate the environment (step 2, second line) |
 | `error: externally-managed-environment` | Your system's Python does not allow installing packages directly | Use the virtual environment in step 2 |
 | `No module named 'numpy'` | The packages are not installed in the Python you are using | Activate the environment, then run the `pip install` line again |
-| `'python' is not recognized` (Windows) | Python is not on your PATH | Use `py` instead, or reinstall Python and tick "Add python.exe to PATH" |
+| `'python' is not recognized` (Windows) | The environment is not active, or Python is not on your PATH | Activate the environment (step 2, second line). Before step 2, use `py` instead |
+| Typing `python` opens the Microsoft Store (Windows) | Windows' placeholder "app alias" for Python | Install Python from python.org, or turn off the alias in Settings, Apps, Advanced app settings, App execution aliases |
 | `'py' is not recognized` (Windows) | Python came from the Microsoft Store, which has no `py` command | Use `python -m venv .venv` in step 2 instead of `py -m venv .venv` |
 | `running scripts is disabled on this system` (Windows PowerShell) | PowerShell blocks the activation script | Use Command Prompt instead of PowerShell |
+| `ensurepip is not available` (Ubuntu, Debian) | The virtual-environment module is not installed | Run `sudo apt install python3-venv`, then step 2 again |
+
+## Fill in your details
+
+Open `student/student_info.txt` in a text editor (Notepad is fine) and fill in
+every line. These details appear at the top of your report.
 
 ## Run the checks for the first time
 
@@ -83,6 +100,7 @@ You should see:
 
 ```
 verifiedmethods A1: ODE initial value problems (version ...)
+Running the checks (a few seconds; the first run can take longer)...
   Euler          euler_step is not implemented yet.
   Heun           heun_step is not implemented yet.
   Classical RK4  rk4_step is not implemented yet.
@@ -90,12 +108,8 @@ Report: .../report/verification-report.html
 ```
 
 That is correct: you have not written anything yet. Open the report file in
-any web browser to see what it looks like.
-
-## Fill in your details
-
-Open `student/student_info.txt` in a text editor and fill in every line. These
-details appear at the top of your report.
+any web browser to see what it looks like. If you see a line starting
+`Remember to fill in`, some of your details are still empty.
 
 ## The folders
 

@@ -15,7 +15,7 @@ All three functions receive the same arguments:
 
 and must return y_{n+1} as a NEW NumPy array with the same shape as y.
 
-Rules that the checks enforce:
+Rules (the checks test most of them):
   * Use only NumPy (no solvers from SciPy or elsewhere).
   * Call f exactly as often as the method needs: Euler once, Heun twice,
     RK4 four times. Keep each stage value in a variable.
@@ -32,7 +32,11 @@ def euler_step(f, t, y, h):
 
 
 def heun_step(f, t, y, h):
-    """One step of Heun's method, the improved Euler method (tutorial section 4). Order 2."""
+    """One step of Heun's method, the improved Euler method (tutorial section 4). Order 2.
+
+    Some textbooks call this formula the modified Euler method. Use the formula in
+    tutorial section 4: two evaluations of f per step.
+    """
     raise NotImplementedError("Write Heun's method here (tutorial section 4).")
 
 

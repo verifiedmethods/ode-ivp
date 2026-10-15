@@ -14,7 +14,7 @@ A1 is the first unit of verifiedmethods and the prototype that goes to superviso
 
 **Who it is for:** final-year undergraduates (the "comparative study of Euler and Runge–Kutta methods" project), and MSc students as a refresher before block methods (A5).
 
-**What the student does:** writes the three step functions, then carries out and writes up a verification study: observed convergence order, error against cost, and stability. The code is the easy part (PLAN Section 4.2); the analysis is the project.
+**What the student does:** writes the three step functions, then carries out and writes up a verification study: observed convergence order, error against cost, and stability. The code is the easy part (any textbook or AI tool supplies it); the analysis is the project.
 
 ## 2. Student experience
 
@@ -35,7 +35,7 @@ Target: from unzip to a first report in under 15 minutes for a student who alrea
 | P3 | Logistic: $y' = r y (1 - y/K)$, $r = 0.8$, $K = 10$, $y(0) = 1$ | $[0, 5]$ | $\dfrac{K y_0 e^{rt}}{K + y_0 (e^{rt} - 1)}$ | Nonlinear; used in the population brief. |
 | P4 | Harmonic oscillator: $y_1' = y_2$, $y_2' = -y_1$, $y(0) = (1, 0)$ | $[0, 2\pi]$ | $(\cos t, -\sin t)$ | A system: checks vector support; Euler's energy growth is visible. |
 | P5 | Lotka–Volterra: $x' = ax - bxy$, $y' = -cy + dxy$, $(a,b,c,d) = (1, 0.1, 1.5, 0.075)$, $(x,y)(0) = (10, 5)$ | $[0, 15]$ | none | Compared with SciPy `solve_ivp` (DOP853, `rtol = atol = 1e-13`). |
-| P6 | Stiff test: $y' = \lambda y$, $\lambda = -50$, $y(0) = 1$ | $[0, 4]$ | $e^{\lambda t}$ | Stability limits: $h < 2/|\lambda|$ for Euler and Heun, $h < 2.7853/|\lambda|$ for RK4. |
+| P6 | Stiff test: $y' = \lambda y$, $\lambda = -50$, $y(0) = 1$ | $[0, 4]$ | $e^{\lambda t}$ | Stability limits: $h < 2/\lvert\lambda\rvert$ for Euler and Heun, $h < 2.7853/\lvert\lambda\rvert$ for RK4. |
 
 ## 4. Checks
 
@@ -48,7 +48,7 @@ The report separates **gates**, which must pass, from **reported results**, whic
 | G1 | **One step matches the method.** One step from three stored cases (P2 at $t = 0.4$, P3 at $t = 1$, P4 at $t = 0.5$; $h = 0.1$) agrees with the stored expected values. | Relative difference $\le 10^{-12}$: only rounding separates a correct implementation from the stored values (measured $\le 2.2 \times 10^{-16}$). The expected values are computed by the private reference implementation and stored as numbers; no reference code ships with the unit. |
 | G2 | **Cost per step.** Exactly 1, 2 or 4 calls to $f$ per step. | Exact count. This defines the method's cost, and it catches implementations that call a library solver inside the step. |
 | G3 | **Works on systems, without side effects.** On P4 the step returns an array of the input's shape, and does not modify the input `y` in place. | Exact. In-place modification is the most common NumPy bug in hand-written RK code. |
-| G4 | **Observed convergence order.** On P2 with $n = 20, 40, 80, 160, 320$ steps, the least-squares slope of $\log \|e\|$ against $\log h$ over $n = 40$ to $320$. | $|p_{\text{obs}} - p| \le 0.1$. Reference slopes: Euler 0.98, Heun 1.99, RK4 3.99. The margin covers the pre-asymptotic range without letting a lower-order method pass. |
+| G4 | **Observed convergence order.** On P2 with $n = 20, 40, 80, 160, 320$ steps, the least-squares slope of $\log \|e\|$ against $\log h$ over $n = 40$ to $320$. | $\lvert p_{\text{obs}} - p\rvert \le 0.1$. Reference slopes: Euler 0.977, Heun 1.992, RK4 3.995. The margin covers the pre-asymptotic range without letting a lower-order method pass. |
 
 ### 4.2 Reported results (no threshold)
 
@@ -58,7 +58,7 @@ The report separates **gates**, which must pass, from **reported results**, whic
 | R2 | Convergence plot: $\|e\|$ against $h$ on log–log axes for P2, with reference slopes 1, 2 and 4 | straight lines of slope 1, 2, 4 |
 | R3 | Cost plot: $\|e\|$ against the number of $f$-evaluations for P2 | RK4 cheapest for any accuracy below about $10^{-3}$ |
 | R4 | Agreement with SciPy on P5, relative error at $t = 15$ with $n = 1500$ and $15000$ | Euler $1.3 \times 10^{-1}$ / $1.1 \times 10^{-2}$; Heun $1.4 \times 10^{-4}$ / $1.4 \times 10^{-6}$; RK4 $1.7 \times 10^{-9}$ / $5 \times 10^{-14}$ |
-| R5 | Stability on P6 at $0.95\times$ and $1.05\times$ the theoretical step-size limit: $|y(4)|$ | bounded ($\le 3 \times 10^{-5}$) below the limit; grows ($\ge 8 \times 10^{3}$) above it, for all three methods |
+| R5 | Stability on P6 at $0.95\times$ and $1.05\times$ the theoretical step-size limit: $\lvert y(4)\rvert$ | bounded ($\le 5 \times 10^{-5}$) below the limit; grows ($\ge 8 \times 10^{3}$) above it, for all three methods |
 
 ### 4.3 Checks on the checks (maintainer tests)
 
@@ -78,7 +78,7 @@ The development test suite runs deliberately broken implementations and requires
 
 ## 5. Verification report
 
-**Contents:** unit and version; student information from `student_info.txt`; date; run mode (CI or local); code fingerprint (SHA-256 of `student/steps.py`, or the git commit in CI); check-suite fingerprint (SHA-256 of the files in `vm/`); a gates table and a reported-results table per method; the R2 and R3 plots; the environment (Python, NumPy, SciPy, Matplotlib versions, OS); and a fixed statement of what the report shows and does not show.
+**Contents:** unit and version; student information from `student_info.txt`; date; run mode (CI or local); code fingerprint (SHA-256 of `student/steps.py`, or the git commit in CI); check-suite fingerprint (one SHA-256 over `vm/*.py`, `vm/expected.json` and `verify.py`, with line endings normalised so Windows and Linux copies agree); the modules imported by `steps.py` (read with `ast`, not run), with a warning for the supervisor if it uses anything other than NumPy or `math`; a gates table and a reported-results table per method; the R2 and R3 plots; the environment (Python, NumPy, SciPy, Matplotlib versions, OS); and a fixed statement of what the report shows and does not show.
 
 **Trust model:**
 
@@ -98,7 +98,8 @@ ode-ivp/
   verify.py                 entry point
   student/
     steps.py                euler_step, heun_step, rk4_step (stubs)
-    student_info.txt        name, matric no., institution, supervisor, AI-use disclosure
+    student_info.txt        name, matric no., department, institution, supervisor, AI-use disclosure
+    CONTRIBUTION.md         the student's contribution statement, signed by the supervisor
   vm/                       provided code; students do not edit it
     problems.py             P1 to P6
     integrate.py            fixed-step driver; f-evaluation counter
@@ -106,11 +107,15 @@ ode-ivp/
     checks.py               gates and reported results
     expected.json           stored one-step values for G1
     report.py               HTML and JSON report
+    runner.py               command line behind verify.py; student information; import scan
+    fingerprint.py          SHA-256 fingerprints (standard library only)
   tutorial/                 the tutorial (also published on the site)
   briefs/                   project briefs, with small data files
   supervisors/              viva questions, rubric, AI-use statement
-  .github/workflows/verify.yml   CI for student copies (official vm/ from the release)
-  tests/                    maintainer tests, including Section 4.3
+  tools/build_bundle.py     builds the offline zip, the official check suite and checksums
+  tools/student-verify.yml.in   CI template shipped to students (official vm/ from the release)
+  .github/workflows/ci.yml  maintainer CI
+  tests/                    public maintainer tests (the Section 4.3 tests are private)
   docs/dev/design.md        this document
 ```
 
@@ -120,7 +125,8 @@ The private `solutions` repository holds the reference implementation and the sc
 
 ## 7. Tutorial outline
 
-1. The problem $y' = f(t, y)$, and why we solve it numerically.
+0. Setting up: Python, a virtual environment, and a first run of `verify.py`.
+1. The problem $y' = f(t, y)$, and why we solve it numerically; the test problems P1 to P6.
 2. Euler's method: derivation from the Taylor series; implement `euler_step`; run `verify.py` for the first time.
 3. **Primer: measuring error and convergence order.** Error against $h$ on log–log axes, and $p_{\text{obs}} = \log(\|e_h\| / \|e_{h/2}\|) / \log 2$. (This primer becomes Unit 0 later.)
 4. Heun and RK4: implement them; read the gates.
@@ -131,9 +137,9 @@ The private `solutions` repository holds the reference implementation and the sc
 
 ## 8. Project briefs (prototype: three)
 
-1. **Comparing Euler, Heun and RK4 properly.** Which method reaches a target accuracy of $10^{-6}$ on P2 and P3 at the lowest cost? Answer with the error–cost plot and observed orders, not with a single step size.
+1. **Comparing Euler, Heun and RK4 properly.** Which method reaches target accuracies of $10^{-2}$, $10^{-6}$ and $10^{-10}$ on P2 and P3 at the lowest cost? Answer with the error–cost plot and observed orders, not with a single step size.
 2. **Nigeria's population with the logistic model.** Solve the logistic model with parameters given in the brief, compare the methods, and compare with World Bank population figures for Nigeria (CC BY 4.0, bundled as a small CSV). Stretch goal: estimate $r$ and $K$ by least squares.
-3. **When explicit methods fail: stiffness.** Find the stability limits on P6 and on a stiff two-component reaction system by experiment, and compare them with the theory from the stability functions.
+3. **When explicit methods fail: stiffness.** Find the stability limits on P6 and on a stiff linear two-compartment model (eigenvalues $-1$ and $-100$) by experiment, and compare them with the theory from the stability functions.
 
 Each brief states what counts as the student's contribution, and states that changing parameters alone is not a contribution.
 

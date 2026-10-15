@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import ast
 import contextlib
 import datetime as _dt
 import io
@@ -21,6 +22,31 @@ from .report import build_html, build_json
 ROOT = Path(__file__).resolve().parent.parent
 
 INFO_FIELDS = ("name", "matric_number", "department", "institution", "supervisor", "ai_use")
+EXPECTED_IMPORTS = {"numpy", "math"}
+SUSPICIOUS_CALLS = {"__import__", "exec", "eval", "compile", "open", "globals", "setattr"}
+
+
+def scan_imports(path: Path):
+    """Modules imported by the student's file (read with ast, not run), and anything unexpected.
+
+    The units need only NumPy. Other imports or calls such as exec() are not
+    forbidden, but a supervisor should look at the file before trusting the report.
+    """
+    try:
+        tree = ast.parse(Path(path).read_text(encoding="utf-8", errors="replace"))
+    except SyntaxError:
+        return [], []
+    found = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            found |= {alias.name.split(".")[0] for alias in node.names}
+        elif isinstance(node, ast.ImportFrom):
+            found.add((node.module or ".").split(".")[0] if node.level == 0 else "." + (node.module or ""))
+        elif isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in SUSPICIOUS_CALLS:
+            found.add(node.func.id + "()")
+    imports = sorted(found)
+    return imports, [m for m in imports if m not in EXPECTED_IMPORTS]
+
 
 
 def read_info(path: Path) -> dict:
@@ -123,6 +149,7 @@ def main(argv=None) -> int:
         "mode_label": "GitHub Actions run" if ci else "local run",
         "student": read_info(info_path),
         "fingerprints": {"student_code": file_sha256(steps_path), "check_suite": suite_fingerprint()},
+        "student_code": dict(zip(("imports", "unexpected"), scan_imports(steps_path))),
         "environment": environment(),
     }
     if ci:
@@ -158,6 +185,10 @@ def main(argv=None) -> int:
         else:
             for g in failed:
                 print(f"      {g.id} FAILED ({g.title}): {g.hint or g.measured}")
+    unexpected = meta["student_code"]["unexpected"]
+    if unexpected:
+        print(f"Note: steps.py uses {', '.join(unexpected)}. The methods need only NumPy; "
+              "your report flags this for your supervisor.")
     print(f"Report: {html_path}")
     unfilled = [k for k in ("name", "matric_number", "institution", "supervisor", "ai_use") if not meta["student"].get(k)]
     if unfilled:
