@@ -13,8 +13,16 @@ supervisor can read in two minutes.
 
 ## Quick start
 
-You need Python 3.10 or later with NumPy, SciPy and Matplotlib
-(`python -m pip install -r requirements.txt`). Then, in this folder:
+Set up once (details in [tutorial section 0](tutorial/00-setup.md)): in this
+folder, create a virtual environment and install NumPy, SciPy and Matplotlib.
+
+| Windows (Command Prompt) | macOS and Linux |
+|---|---|
+| `py -m venv .venv` | `python3 -m venv .venv` |
+| `.venv\Scripts\activate` | `source .venv/bin/activate` |
+| `python -m pip install -r requirements.txt` | `python -m pip install -r requirements.txt` |
+
+Then, with the environment active:
 
 ```
 python verify.py

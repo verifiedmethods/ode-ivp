@@ -29,7 +29,7 @@ STUDENT_FILES = [
     "student/steps.py", "student/student_info.txt", "student/CONTRIBUTION.md",
 ]
 STUDENT_DIRS = ["vm", "tutorial", "briefs", "supervisors"]
-STUDENT_GITIGNORE = "__pycache__/\n*.py[cod]\nreport/\n"
+STUDENT_GITIGNORE = "__pycache__/\n*.py[cod]\nreport/\n.venv/\n"
 
 
 def _files(dirs):
