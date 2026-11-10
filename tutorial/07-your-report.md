@@ -23,6 +23,13 @@ Run `python verify.py` and open `report/verification-report.html`.
 When a gate fails, the report gives a hint. Fix the code, run
 `python verify.py` again, and repeat until all gates pass.
 
+## Checking a completed submission
+
+Run `python verify.py --strict` before submitting. It writes the report and
+returns a failure status if any method is missing, unimplemented, or fails a
+gate. An ordinary local run supports checking work in progress; its successful
+exit alone does not mean all methods passed. GitHub Actions uses strict mode.
+
 ## Reported results (no pass mark)
 
 R1 to R5 have no pass mark: they are the evidence for your write-up. Explain

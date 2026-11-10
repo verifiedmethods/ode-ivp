@@ -80,6 +80,13 @@ The development test suite runs deliberately broken implementations and requires
 
 **Contents:** unit and version; student information from `student_info.txt`; date; run mode (CI or local); code fingerprint (SHA-256 of `student/steps.py`, or the git commit in CI); check-suite fingerprint (one SHA-256 over `vm/*.py`, `vm/expected.json` and `verify.py`, with line endings normalised so Windows and Linux copies agree); the modules imported by `steps.py` (read with `ast`, not run), with a warning for the supervisor if it uses anything other than NumPy or `math`; a gates table and a reported-results table per method; the R2 and R3 plots; the environment (Python, NumPy, SciPy, Matplotlib versions, OS); and a fixed statement of what the report shows and does not show.
 
+**Source provenance and completion:** the runner reads one source snapshot,
+compiles it directly without cached bytecode, and uses those same bytes for
+the normalized code fingerprint and import scan. Local progress runs allow
+unimplemented methods. `--strict`, `--ci`, and runs with `GITHUB_ACTIONS=true`
+require all three methods to pass. The maintainer CI smoke run expects exit 1
+for untouched stubs while retaining their report.
+
 **Trust model:**
 
 - **Any self-reported value can be forged.** A determined student can edit the checks, `verify.py` or the CI workflow, including the fingerprints the report prints. No report the student produces is proof on its own.
