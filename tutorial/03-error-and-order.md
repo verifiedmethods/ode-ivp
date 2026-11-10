@@ -2,7 +2,9 @@
 
 This section is the heart of the unit. Many project reports compare methods by
 printing a table of errors at one step size. That shows *which number is
-smaller*, not *whether the code is right*. A convergence study shows both.
+smaller*, with little evidence about the implementation. A convergence study
+tests whether the observed behaviour agrees with theory on the chosen problems;
+it is useful evidence, not a proof of correctness for all inputs.
 
 ## Error
 

@@ -28,8 +28,9 @@ STATEMENT = (
 )
 SUPERVISOR_CHECK = (
     "To confirm it, copy the student's <code>student</code> folder into your own fresh copy of this unit and run "
-    "<code>python verify.py</code>. Your report should show the same gates, and the check-suite fingerprint should "
-    "match the one published for this release on the unit's page at verifiedmethods.github.io."
+    "<code>python verify.py --strict</code>. Your report should show the same gates and student-code fingerprint, and the check-suite fingerprint should "
+    "match the stated checker on the unit's page at verifiedmethods.github.io. "
+    "For development prototypes, keep the original zip and its SHA-256 with the submission."
 )
 
 CSS = """
@@ -43,7 +44,7 @@ h1 { font-size: 26px; margin: 0 0 2px; }
 h2 { font-size: 19px; margin: 34px 0 10px; padding-top: 6px; border-top: 1px solid var(--line); }
 h3 { font-size: 16px; margin: 22px 0 8px; }
 .sub { color: var(--ink2); margin: 0 0 18px; }
-.grid { display: grid; grid-template-columns: max-content 1fr; gap: 4px 16px; background: var(--soft);
+.grid { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 16px; background: var(--soft);
         border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
 .grid dt { color: var(--ink2); }
 .grid dd { margin: 0; overflow-wrap: anywhere; }
@@ -69,6 +70,12 @@ table.narrow { width: auto; min-width: 50%; }
 td.order { color: var(--ink2); }
 footer { margin-top: 36px; color: var(--ink3); font-size: 12px; }
 .block { break-inside: avoid; }
+@media screen and (max-width: 32em) {
+  .grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .grid dt { margin-top: 8px; }
+  .grid dd { margin-bottom: 4px; }
+  h2 .mono { overflow-wrap: anywhere; }
+}
 @media print { body { font-size: 12px; } main { padding: 0; } h2, h3 { break-after: avoid; }
                .block, figure, table, .statement { break-inside: avoid; }
                figure img { max-width: 470px; } }
@@ -253,8 +260,8 @@ def _scipy_table(r) -> str:
     return (
         "<div class='block'><h3>R4. Agreement with SciPy on P5 (Lotka–Volterra, no exact solution)</h3>"
         f"<p class='note'>Relative error at t = 15 against {_e(s['reference'])}.</p>"
-        "<table class='narrow'><thead><tr><th class='num'>n</th><th class='num'>h</th><th class='num'>relative error</th></tr></thead>"
-        f"<tbody>{body}</tbody></table></div>"
+        "<div class='wrap' tabindex='0' role='region' aria-label='Agreement with SciPy'><table class='narrow'><thead><tr><th class='num'>n</th><th class='num'>h</th><th class='num'>relative error</th></tr></thead>"
+        f"<tbody>{body}</tbody></table></div></div>"
     )
 
 
@@ -272,8 +279,8 @@ def _stability_table(r) -> str:
     return (
         "<div class='block'><h3>R5. Stability on the stiff problem P6 (y' = −50y on [0, 4])</h3>"
         f"<p class='note'>Theory: {_e(s['theory'])}. The exact solution decays to 1.4e-87.</p>"
-        "<table class='narrow'><thead><tr><th class='num'>h</th><th class='num'>h / limit</th><th class='num'>|y(4)|</th>"
-        f"<th>behaviour</th></tr></thead><tbody>{body}</tbody></table></div>"
+        "<div class='wrap' tabindex='0' role='region' aria-label='Stability results'><table class='narrow'><thead><tr><th class='num'>h</th><th class='num'>h / limit</th><th class='num'>|y(4)|</th>"
+        f"<th>behaviour</th></tr></thead><tbody>{body}</tbody></table></div></div>"
     )
 
 

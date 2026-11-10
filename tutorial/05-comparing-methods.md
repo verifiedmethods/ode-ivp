@@ -5,8 +5,9 @@ evaluations of $f$ and each Euler step costs one. A fair comparison asks:
 
 > **For a target accuracy, which method needs the least work?**
 
-Work is measured by the number of evaluations of $f$, because for real problems
-evaluating $f$ dominates the cost.
+Here work is measured by the number of evaluations of $f$, a useful proxy when
+evaluating $f$ dominates the cost. Actual runtime also depends on implementation
+and hardware; distinguish the operation count from a timing benchmark.
 
 ## The error–cost plot
 
@@ -20,8 +21,9 @@ $f$-evaluations, on log–log axes. To read it:
 
 For a method of order $p$ that uses $s$ evaluations per step, $N$ steps cost
 $W = sN$ evaluations, so $e \approx C h^p \propto W^{-p}$: on the error–cost
-plot the slope is $-p$. Higher order wins once the target accuracy is small
-enough, which is why RK4 is so widely used.
+plot the slope is $-p$. On smooth, nonstiff problems in this asymptotic range,
+higher order can reduce the work for tight accuracy targets. Stability
+restrictions and rounding can change that comparison.
 
 ## Do not compare at one step size
 

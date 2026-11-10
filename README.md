@@ -7,7 +7,7 @@ In this unit you write three methods for $y' = f(t, y)$ (Euler, Heun and the
 classical fourth-order Runge–Kutta method), then show with evidence that they
 work: observed convergence order, error against cost, and stability. A single
 command checks your code and writes a **verification report** that your
-supervisor can read in two minutes.
+lecturer can inspect alongside your explanation and a rerun of the checks.
 
 > **Status:** prototype for trial (version 0.1.0.dev0); not yet a formal release.
 >
@@ -41,7 +41,9 @@ Before submitting, run `python verify.py --strict`. This requires all three
 methods to be implemented and pass every gate. Ordinary local runs let you
 check unfinished work; GitHub Actions uses strict checking automatically.
 
-Everything runs offline, in a few seconds, on a modest laptop.
+The supplied code, data and generated reports run offline after setup. The
+tutorial files in this zip are Markdown source; for formatted offline reading,
+save the web sections as PDFs or use a Markdown reader with equation support.
 
 ## For supervisors
 

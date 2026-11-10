@@ -17,14 +17,20 @@ order; each one ends with something to do.
 | [7](07-your-report.md) | Reading your verification report |
 | [8](08-choosing-a-brief.md) | Choosing a project brief |
 
-**What you need:** a laptop (4 GB of memory is enough), Python 3.10 or later
-with NumPy, SciPy and Matplotlib, and about four to six hours for sections 0
-to 7, best spread over several sittings. No internet connection is needed once
-Python and the packages are installed.
+**What you need:** a computer with Python 3.10 or later, NumPy, SciPy and
+Matplotlib. Plan several sessions; setup, tutorial and project time depend on
+your background. The code and reports work offline after installation; section
+0 explains how to prepare formatted tutorial material for offline reading.
 
 **What you should know already:** calculus including Taylor series, a first
 course in ordinary differential equations, and basic Python (variables,
 functions, and arithmetic with NumPy arrays).
 
-**What you hand in:** your `student/steps.py`, your verification report, your
-completed `student/CONTRIBUTION.md`, and the write-up for your project brief.
+**What you hand in:** your `student` folder (including `steps.py`,
+`student_info.txt` and completed `CONTRIBUTION.md`), your verification report,
+and the agreed assignment or project write-up.
+
+**Further reading:** Driscoll and Braun's
+[*Fundamentals of Numerical Computation*, Python edition](https://fncbook.com/python/)
+provides additional explanations and examples. Your lecturer's course text
+should guide the depth of theory expected.
