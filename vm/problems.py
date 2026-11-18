@@ -7,7 +7,6 @@ for a scalar equation) and returns an array of the same shape.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from functools import lru_cache
 from typing import Callable, Optional
 
 import numpy as np
@@ -33,7 +32,13 @@ class Problem:
         """Exact solution at ``t_end``, or a tight SciPy reference if there is none."""
         if self.exact is not None:
             return np.asarray(self.exact(self.t_end), dtype=float)
-        return _scipy_reference(self.id)
+        from scipy.integrate import solve_ivp
+
+        sol = solve_ivp(self.f, (self.t0, self.t_end), self.initial(),
+                        method="DOP853", rtol=1e-13, atol=1e-13)
+        if not sol.success:  # pragma: no cover
+            raise RuntimeError(f"SciPy reference for {self.id} failed: {sol.message}")
+        return sol.y[:, -1].copy()
 
 
 # P3 parameters (logistic growth)
@@ -88,14 +93,3 @@ PROBLEMS = {
         ),
     )
 }
-
-
-@lru_cache(maxsize=None)
-def _scipy_reference(problem_id: str) -> np.ndarray:
-    from scipy.integrate import solve_ivp
-
-    p = PROBLEMS[problem_id]
-    sol = solve_ivp(p.f, (p.t0, p.t_end), p.initial(), method="DOP853", rtol=1e-13, atol=1e-13)
-    if not sol.success:  # pragma: no cover
-        raise RuntimeError(f"SciPy reference for {problem_id} failed: {sol.message}")
-    return sol.y[:, -1].copy()

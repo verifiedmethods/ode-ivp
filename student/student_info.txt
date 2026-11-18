@@ -7,8 +7,7 @@ department: <your department>
 institution: <your university or polytechnic>
 supervisor: <your supervisor's name>
 
-# Say whether you used AI tools (ChatGPT, Claude, Gemini, Copilot, ...) and for
-# what. Using them to understand the method or to find a bug is allowed if you
-# say so here. Your analysis and write-up must be your own. Continue on
-# indented lines if you need more space.
+# Follow your lecturer's course rules for AI and other assistance. Say
+# whether you used AI tools and, if so, for what. Write your own analysis
+# and interpretation. Continue on indented lines if you need more space.
 ai_use: <for example: "None." or "I asked ChatGPT to explain why RK4 evaluates f at t + h/2.">

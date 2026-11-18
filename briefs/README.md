@@ -13,7 +13,10 @@ contribution.
 ## Using the provided code in your own scripts
 
 Write your scripts in the unit's main folder (next to `verify.py`), so that
-Python can find both the provided code and your methods:
+Python can find both the provided code and your methods. Hand in these
+scripts or notebooks with any additional inputs they use. Give the command,
+working directory and settings that reproduce a named result in your
+write-up, such as the population projections table.
 
 ```python
 from vm.problems import PROBLEMS

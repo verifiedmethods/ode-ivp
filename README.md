@@ -9,7 +9,7 @@ work: observed convergence order, error against cost, and stability. A single
 command checks your code and writes a **verification report** that your
 lecturer can inspect alongside your explanation and a rerun of the checks.
 
-> **Status:** pilot prerelease (version 0.1.0a1), for small teaching trials.
+> **Status:** pilot version 0.1.0a2, for small teaching trials.
 >
 > Website: https://verifiedmethods.github.io · Contact: abdgafartunde@yahoo.com
 

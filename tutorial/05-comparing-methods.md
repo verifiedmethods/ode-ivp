@@ -14,10 +14,16 @@ and hardware; distinguish the operation count from a timing benchmark.
 Figure R3 in your report plots the error against the number of
 $f$-evaluations, on log–log axes. To read it:
 
-1. Choose a target error, say $10^{-6}$, and draw a horizontal line at that
-   height.
-2. Where each method's line crosses it, read off the work needed.
-3. The method furthest to the left is the cheapest for that accuracy.
+1. On the reference plot for P2, draw a horizontal line at $10^{-2}$.
+   Euler and Heun both cross it. Estimate their evaluation counts at the
+   crossings. Which uses fewer evaluations? RK4 already meets the target
+   at its coarsest measured step, so its first plotted count gives an upper
+   bound on the work needed.
+2. Repeat at $10^{-6}$. Only RK4 crosses this target in the sampled range.
+   Report how far Euler and Heun got at their largest measured counts.
+3. To estimate a crossing outside a measured range, run additional step
+   sizes or fit the error model below over a justified range. Label a
+   prediction beyond your data as an extrapolation.
 
 For a method of order $p$ that uses $s$ evaluations per step, $N$ steps cost
 $W = sN$ evaluations, so $e \approx C h^p \propto W^{-p}$: on the error–cost

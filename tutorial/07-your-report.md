@@ -46,11 +46,11 @@ can.
 
 ## Using AI tools
 
-You may use AI tools to understand the methods or to find a bug, if you say so
-in `student_info.txt`. Write the three step functions yourself; if any part of
-your code came from an AI tool or another person, say so in your disclosure and
-in `CONTRIBUTION.md`. Your analysis and write-up must be your own, and you must
-be able to explain every line of your code in your viva.
+Follow your lecturer's course rules for AI and other assistance. If those
+rules permit AI help with a method or a bug, describe that help in
+`student_info.txt`. Write the three step functions yourself and disclose any
+code received from another person or an AI tool in `CONTRIBUTION.md` as well.
+Write your own analysis and be ready to explain every line of your code.
 
 ## Printing the report
 

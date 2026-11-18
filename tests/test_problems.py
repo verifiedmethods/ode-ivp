@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 
 from vm.checks import METHODS, RK4_REAL_STABILITY_LIMIT
-from vm.problems import PROBLEMS
+from vm.problems import PROBLEMS, Problem
 
 
 @pytest.mark.parametrize("pid", [p for p in PROBLEMS if PROBLEMS[p].exact is not None])
@@ -20,6 +20,12 @@ def test_exact_solution_satisfies_the_equation(pid):
 def test_lotka_volterra_reference_is_finite_and_positive():
     ref = PROBLEMS["P5"].solution_at_end()
     assert ref.shape == (2,) and np.all(np.isfinite(ref)) and np.all(ref > 0)
+
+
+@pytest.mark.parametrize("problem_id", ["Q1", "P1"])
+def test_reference_uses_the_supplied_equation_and_initial_condition(problem_id):
+    decay = Problem(problem_id, "Decay", "y' = -2y", lambda t, y: -2 * y, 3.0, (2.0,), 4.0)
+    np.testing.assert_allclose(decay.solution_at_end(), [2 * np.exp(-2)], rtol=1e-12)
 
 
 def test_rk4_stability_limit_is_the_root_of_the_stability_polynomial():

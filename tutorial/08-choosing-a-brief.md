@@ -14,4 +14,5 @@ interpretation.
 
 Include in your project appendix: your verification report (printed, or saved
 as PDF from your browser), your completed `student/CONTRIBUTION.md`, and your
-`steps.py`.
+`steps.py`. Submit your project scripts or notebooks alongside the appendix,
+with their additional inputs and the command that regenerates a named result.
